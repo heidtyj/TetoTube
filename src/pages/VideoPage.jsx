@@ -13,8 +13,6 @@ export default function VideoPage() {
   const [muted, setMuted] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [progress, setProgress] = useState(0)
-
-  // 키보드 단축키
   useEffect(() => {
     const onKey = (e) => {
       const v = videoRef.current
@@ -28,23 +26,36 @@ export default function VideoPage() {
           else v.pause()
           setPaused(v.paused)
           break
+
+        case 'ArrowRight':
+          e.preventDefault()
+          v.currentTime = Math.min(v.duration, v.currentTime + 5)
+          break
+
+        case 'ArrowLeft': 
+          e.preventDefault()
+          v.currentTime = Math.max(0, v.currentTime - 5)
+          break
+
         default:
           break
       }
 
       switch (e.key.toLowerCase()) {
-        case 'm':
+        case 'm': 
           e.preventDefault()
           e.stopPropagation()
           v.muted = !v.muted
           setMuted(v.muted)
           break
+
         case 'f':
           e.preventDefault()
           e.stopPropagation()
           if (!document.fullscreenElement) v.requestFullscreen?.()
           else document.exitFullscreen()
           break
+
         default:
           break
       }
@@ -54,7 +65,6 @@ export default function VideoPage() {
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
-  // 진행도 업데이트
   useEffect(() => {
     const v = videoRef.current
     if (!v) return
@@ -116,10 +126,9 @@ export default function VideoPage() {
           muted={muted}
           className="video-player"
           preload="metadata"
-          controls={false}  // 기본 브라우저 UI 제거
+          controls={false}
         />
 
-        {/* 진행도바 */}
         <div
           ref={progressRef}
           className="progress-bar"
@@ -129,11 +138,9 @@ export default function VideoPage() {
         </div>
 
         <div className="player-controls">
-          {/* 왼쪽: 재생/음소거 */}
           <button onClick={togglePlay}>{paused ? '▶' : '⏸'}</button>
           <button onClick={toggleMute}>{muted ? '🔇' : '🔊'}</button>
 
-          {/* 오른쪽: 전체화면 / 설정 */}
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
             <button onClick={toggleFullscreen}>⛶</button>
             <select value={playbackRate} onChange={onRateChange}>
