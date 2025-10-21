@@ -130,5 +130,16 @@ export const videos = [
       channelAvatar: '/assets/avatar/avatar9.png', 
       views: '41만',
       uploadTime: '1개월 전',
+    },
+    {
+      id: 13,
+      thumbnail: '/assets/thumbnail/ddait.png', 
+      videoSrc: '/assets/video/Ddait.mp4',
+      duration: '1:24',
+      title: '따잇하는 재미/メベン男 - やる楽しさ | SynthV Cover ft. Kasane Teto',
+      channel: '동땡',
+      channelAvatar: '/assets/avatar/avatar10.png', 
+      views: '4.8만',
+      uploadTime: '2개월 전',
     }
   ] 
