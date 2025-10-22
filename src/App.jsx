@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar'
 import Home from './pages/Home'
 import VideoPage from './pages/VideoPage'
 import Shorts from './pages/Shorts'
+import Explain from './pages/Explain'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/video/:id" element={<VideoPage />} />
             <Route path="/shorts" element={<Shorts />} />
+            <Route path="/explain" element={<Explain />} /> {/* 테토란? 라우트 */}
           </Routes>
         </main>
       </div>

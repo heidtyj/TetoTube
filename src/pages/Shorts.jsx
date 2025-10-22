@@ -7,7 +7,6 @@ export default function Shorts() {
   const [playedIds, setPlayedIds] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // 셔플
   useEffect(() => setShuffled(shuffleArray(shorts)), [])
 
   const shuffleArray = (arr) => {
@@ -19,7 +18,6 @@ export default function Shorts() {
     return copy
   }
 
-  // 관찰자 설정: 현재 화면에 보이는 쇼츠만 재생
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -32,13 +30,11 @@ export default function Shorts() {
           const idx = parseInt(v.dataset.index)
 
           if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-            // 화면 안에 충분히 들어온 경우 → 재생 & 소리 켬
             v.muted = false
             v.play().catch(() => {})
             setCurrentIndex(idx)
             setPlayedIds((prev) => (prev.includes(idx) ? prev : [...prev, idx]))
           } else {
-            // 화면 밖으로 나간 경우 → 정지 & 음소거
             v.pause()
             v.muted = true
           }
@@ -51,7 +47,6 @@ export default function Shorts() {
     return () => obs.disconnect()
   }, [shuffled])
 
-  // 키보드 컨트롤 (↑↓, Space)
   useEffect(() => {
     const onKey = (e) => {
       const container = containerRef.current

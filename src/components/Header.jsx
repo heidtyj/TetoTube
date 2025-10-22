@@ -18,27 +18,14 @@ export default function Header({ onMenuClick, onTitleClick }) {
           <span>TetoTube</span>
         </button>
       </div>
-
-      <div className="topbar-center">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="검색"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-      </div>
-
       <div className="topbar-right">
-        <button className="btn-icon" title="업로드">
-          ⊕
-        </button>
-        <button className="btn-icon" title="알림">
-          🔔
-        </button>
         <button className="avatar" title="프로필">
-          👤
-        </button>
+        <img 
+          src="/assets/thumbnail/profile.png" 
+          alt="프로필 사진" 
+          style={{ height: '32px', width: '32px', borderRadius: '50%' }}
+        />
+</button>
       </div>
     </header>
   )

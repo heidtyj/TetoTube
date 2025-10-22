@@ -123,7 +123,7 @@ export const videos = [
     {
       id: 12,
       thumbnail: '/assets/thumbnail/Over_locked.png', 
-      videoSrc: '/assets/video/Over_Locked.mp4',
+      videoSrc: '/assets/video/OverLocked.mp4',
       duration: '3:04',
       title: 'DryftiN - Overclocked (feat. Kasane Teto) [Original Song]',
       channel: 'DryftiN',

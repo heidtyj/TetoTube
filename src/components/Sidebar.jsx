@@ -8,34 +8,34 @@ export default function Sidebar({ open }) {
   ]
 
   const subMenu = [
-    { label: '내 페이지' },
-    { label: '기록' },
-    { label: '재생목록' },
-    { label: '내 동영상' },
-    { label: '나중에 볼 동영상' },
+    { label: '테토란?', path: '/explain' }, // path 추가
   ]
 
   return (
     <aside className={`sidebar ${open ? 'open' : 'closed'}`}>
       {open ? (
-        <>
-          <nav className="nav-list">
-            {mainMenu.map((item, i) => (
+        <nav className="nav-list">
+          {mainMenu.map((item, i) => (
+            <Link key={i} to={item.path} className="nav-item">
+              <span>{item.icon}</span>
+              <span>{item.label}</span>
+            </Link>
+          ))}
+
+          <div className="nav-divider" />
+
+          {subMenu.map((item, i) =>
+            item.path ? (
               <Link key={i} to={item.path} className="nav-item">
-                <span>{item.icon}</span>
                 <span>{item.label}</span>
               </Link>
-            ))}
-
-            <div className="nav-divider" />
-
-            {subMenu.map((item, i) => (
+            ) : (
               <div key={i} className="nav-item">
                 <span>{item.label}</span>
               </div>
-            ))}
-          </nav>
-        </>
+            )
+          )}
+        </nav>
       ) : (
         <div className="nav-icons">
           <Link to="/" className="nav-icon" title="홈">

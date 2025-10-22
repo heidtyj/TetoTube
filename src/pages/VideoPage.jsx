@@ -13,49 +13,39 @@ export default function VideoPage() {
   const [muted, setMuted] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [progress, setProgress] = useState(0)
+  const [volume, setVolume] = useState(0.6)
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false)
+
   useEffect(() => {
     const onKey = (e) => {
       const v = videoRef.current
       if (!v) return
 
-      switch (e.code) {
-        case 'Space':
-          e.preventDefault()
-          e.stopPropagation()
-          if (v.paused) v.play()
-          else v.pause()
-          setPaused(v.paused)
-          break
-
-        case 'ArrowRight':
-          e.preventDefault()
-          v.currentTime = Math.min(v.duration, v.currentTime + 5)
-          break
-
-        case 'ArrowLeft': 
-          e.preventDefault()
-          v.currentTime = Math.max(0, v.currentTime - 5)
-          break
-
-        default:
-          break
+      if (e.code === 'Space') {
+        e.preventDefault()
+        v.paused ? v.play() : v.pause()
+        setPaused(v.paused)
       }
 
       switch (e.key.toLowerCase()) {
-        case 'm': 
+        case 'm':
           e.preventDefault()
-          e.stopPropagation()
           v.muted = !v.muted
           setMuted(v.muted)
           break
-
         case 'f':
           e.preventDefault()
-          e.stopPropagation()
           if (!document.fullscreenElement) v.requestFullscreen?.()
           else document.exitFullscreen()
           break
-
+        case 'arrowright': 
+          e.preventDefault()
+          v.currentTime = Math.min(v.currentTime + 5, v.duration)
+          break
+        case 'arrowleft':
+          e.preventDefault()
+          v.currentTime = Math.max(v.currentTime - 5, 0)
+          break
         default:
           break
       }
@@ -68,11 +58,7 @@ export default function VideoPage() {
   useEffect(() => {
     const v = videoRef.current
     if (!v) return
-
-    const updateProgress = () => {
-      setProgress((v.currentTime / v.duration) * 100)
-    }
-
+    const updateProgress = () => setProgress((v.currentTime / v.duration) * 100)
     v.addEventListener('timeupdate', updateProgress)
     return () => v.removeEventListener('timeupdate', updateProgress)
   }, [])
@@ -116,6 +102,18 @@ export default function VideoPage() {
     videoRef.current.currentTime = percent * videoRef.current.duration
   }
 
+  const handleVolumeChange = (e) => {
+    const newVol = parseFloat(e.target.value)
+    const v = videoRef.current
+    if (!v) return
+    v.volume = newVol
+    setVolume(newVol)
+    if (v.muted && newVol > 0) {
+      v.muted = false
+      setMuted(false)
+    }
+  }
+
   return (
     <div className="video-page-inner">
       <div className="video-player-wrap">
@@ -127,6 +125,7 @@ export default function VideoPage() {
           className="video-player"
           preload="metadata"
           controls={false}
+          volume={volume}
         />
 
         <div
@@ -139,8 +138,33 @@ export default function VideoPage() {
 
         <div className="player-controls">
           <button onClick={togglePlay}>{paused ? '▶' : '⏸'}</button>
-          <button onClick={toggleMute}>{muted ? '🔇' : '🔊'}</button>
 
+          <div
+            style={{ position: 'relative', display: 'flex', alignItems: 'center' }}
+            onMouseEnter={() => setShowVolumeSlider(true)}
+            onMouseLeave={() => setShowVolumeSlider(false)}
+          >
+            <button onClick={toggleMute}>{muted ? '🔇' : '🔊'}</button>
+
+            {showVolumeSlider && (
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                value={volume}
+                onChange={handleVolumeChange}
+                style={{
+                  marginLeft: '10px',
+                  width: '100px',
+                  height: '6px',
+                  cursor: 'pointer',
+                  accentColor: '#ff4d4d',
+                  transition: 'opacity 0.2s ease',
+                }}
+              />
+            )}
+          </div>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
             <button onClick={toggleFullscreen}>⛶</button>
             <select value={playbackRate} onChange={onRateChange}>

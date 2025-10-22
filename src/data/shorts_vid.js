@@ -9,6 +9,9 @@ export const shorts = [
     { id: 8, src: '/assets/shorts_vid/Waffle_meme.mp4', title: 'Waffle Flip', author: 'Teto' },
     { id: 9, src: '/assets/shorts_vid/Teto_La_AI.mp4', title: 'Teto La AI??!?!?!', author: 'LT.Linh:3' },
     { id: 10, src: '/assets/shorts_vid/Life_of_Pear.mp4', title: 'Life of Pear', author: 'Pear' },
-    { id: 11, src: '/assets/shorts_vid/Hito_Mania.mp4', title: 'Hito Mania', author: 'Miku' }
+    { id: 11, src: '/assets/shorts_vid/Hito_Mania.mp4', title: 'Hito Mania', author: 'Miku' },
+    { id: 12, src: '/assets/shorts_vid/Spin_Teto.mp4', title: 'SpinTeeeeeeeto', author: 'Teto' },
+    { id: 13, src: '/assets/shorts_vid/Throw_Teto.mp4', title: 'Throwing Teto', author: 'Miku' },
+    { id: 14, src: '/assets/shorts_vid/Trick_Shot.mp4', title: 'Trick Shot', author: 'Teto\'s mom' }
   ]
   
